@@ -1,9 +1,14 @@
 <template>
-  <div>hello</div>
+	<div class="page">
+		<CommentsTable />
+	</div>
 </template>
 
 <script>
+import CommentsTable from '~/components/CommentsTable.vue'
+
 export default {
-  name: 'IndexPage',
+	name: 'IndexPage',
+	components: { CommentsTable }
 }
 </script>

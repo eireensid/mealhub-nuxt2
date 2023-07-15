@@ -1,45 +1,56 @@
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
-html, body, ul, ol {
-  margin:  0;
-  padding: 0;
+html,
+body,
+ul,
+ol {
+	margin: 0;
+	padding: 0;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-  font-weight: 400;
-  height: 100%;
+	font-weight: 400;
+	height: 100%;
 }
 
-ul, ol {
-  list-style: none;
+ul,
+ol {
+	list-style: none;
 }
 
-h1, h2, h3, h4, h5, h6, p {
-  margin: 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
+	text-decoration: none;
+	color: inherit;
+	display: inline-block;
 }
 
-input, textarea, button {
-
-  &:focus {
-    outline: none;
-  }
+input,
+textarea,
+button {
+	&:focus {
+		outline: none;
+	}
 }
 
 button {
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
+	border: none;
+	background: none;
+	padding: 0;
+	cursor: pointer;
 }
