@@ -29,9 +29,11 @@ import { API_URL } from '~/mixins/api'
 
 export default {
 	name: 'CommentsTable',
+
 	mixins: [
     API_URL
   ],
+
 	data() {
 		return {
 			comments: null,
@@ -41,9 +43,11 @@ export default {
 			page: 1
 		}
 	},
+
 	created() {
 		this.fetchComments()
 	},
+  
 	methods: {
 		async fetchComments() {
 			const url = `${API_URL}/comments?_page=${this.page}&_limit=${this.limit}`
@@ -53,7 +57,29 @@ export default {
 					return resp.json()
 				})
 				.catch(error => error.data)
-		}
+		},
+
+    refetchComments(pageNumber) {
+      this.page = pageNumber
+      fetchComments().then(() => {
+        sortComments('init')
+      })
+      window.scrollTo(0,0)
+    },
+
+    sortComments(mode) {
+      if (mode === 'init') {
+        this.comments.sort((comment1, comment2) => {
+          return this.isIdsAsc ? comment1.id - comment2.id : comment2.id - comment1.id
+        })
+      } else if (mode === 'change') {
+        this.comments.sort((comment1, comment2) => {
+          return this.isIdsAsc ? comment2.id - comment1.id : comment1.id - comment2.id
+        })
+
+        this.isIdsAsc = !this.isIdsAsc
+      }
+    }
 	}
 }
 </script>
