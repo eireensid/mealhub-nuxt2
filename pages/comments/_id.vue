@@ -1,7 +1,7 @@
 <template>
-  <div class="page">
-    <Comment />
-  </div>
+	<div class="page">
+		<Comment />
+	</div>
 </template>
 
 <script>

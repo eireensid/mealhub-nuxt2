@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="sort col" @click="sortComments('change')">
 					<span class="head">id</span>
-					<!-- <nuxt-icon class="sort-ico" name="sort-icon" /> -->
+					<SortIcon class="sort-ico" />
 				</div>
 				<span class="head col">name</span>
 				<span class="head col">email</span>
@@ -26,13 +26,12 @@
 
 <script>
 import { API_URL } from '~/mixins/api'
+import SortIcon from '~/assets/icons/sort-icon.svg?inline'
 
 export default {
 	name: 'CommentsTable',
 
-	mixins: [
-    API_URL
-  ],
+	mixins: [API_URL],
 
 	data() {
 		return {
@@ -44,10 +43,12 @@ export default {
 		}
 	},
 
+	components: { SortIcon },
+
 	created() {
 		this.fetchComments()
 	},
-  
+
 	methods: {
 		async fetchComments() {
 			const url = `${API_URL}/comments?_page=${this.page}&_limit=${this.limit}`
@@ -59,27 +60,27 @@ export default {
 				.catch(error => error.data)
 		},
 
-    refetchComments(pageNumber) {
-      this.page = pageNumber
-      fetchComments().then(() => {
-        sortComments('init')
-      })
-      window.scrollTo(0,0)
-    },
+		refetchComments(pageNumber) {
+			this.page = pageNumber
+			fetchComments().then(() => {
+				sortComments('init')
+			})
+			window.scrollTo(0, 0)
+		},
 
-    sortComments(mode) {
-      if (mode === 'init') {
-        this.comments.sort((comment1, comment2) => {
-          return this.isIdsAsc ? comment1.id - comment2.id : comment2.id - comment1.id
-        })
-      } else if (mode === 'change') {
-        this.comments.sort((comment1, comment2) => {
-          return this.isIdsAsc ? comment2.id - comment1.id : comment1.id - comment2.id
-        })
+		sortComments(mode) {
+			if (mode === 'init') {
+				this.comments.sort((comment1, comment2) => {
+					return this.isIdsAsc ? comment1.id - comment2.id : comment2.id - comment1.id
+				})
+			} else if (mode === 'change') {
+				this.comments.sort((comment1, comment2) => {
+					return this.isIdsAsc ? comment2.id - comment1.id : comment1.id - comment2.id
+				})
 
-        this.isIdsAsc = !this.isIdsAsc
-      }
-    }
+				this.isIdsAsc = !this.isIdsAsc
+			}
+		}
 	}
 }
 </script>
