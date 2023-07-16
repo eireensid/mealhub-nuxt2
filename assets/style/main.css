@@ -49,10 +49,13 @@ button {
 	transition: border-color 0.25s;
 	color: #646cff;
 }
-button:hover {
+button:hover:enabled {
 	border-color: #646cff;
 }
-button.active-page {
+button:disabled {
+	cursor: default;
+}
+button.active {
 	outline: 2px auto #646cff;
 }
 

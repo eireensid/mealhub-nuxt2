@@ -20,13 +20,20 @@
 				<span class="col">{{ comment.email }}</span>
 			</NuxtLink>
 		</div>
-		<div class="pagination">// pagination</div>
+		<div class="pagination-wr">
+			<Pagination
+				:currentPage="page"
+				:totalItems="totalComments"
+				:itemsPerPage="limit"
+				:visiblePages="8" />
+		</div>
 	</div>
 </template>
 
 <script>
 import { API_URL } from '~/mixins/api'
 import SortIcon from '~/assets/icons/sort-icon.svg?inline'
+import Pagination from '~/components/Pagination.vue'
 
 export default {
 	name: 'CommentsTable',
@@ -43,10 +50,17 @@ export default {
 		}
 	},
 
-	components: { SortIcon },
+	components: {
+		SortIcon,
+		Pagination
+	},
 
 	created() {
 		this.fetchComments()
+
+		this.$nuxt.$on('page-changed', pageNum => {
+			this.refetchComments(pageNum)
+		})
 	},
 
 	methods: {
@@ -54,7 +68,7 @@ export default {
 			const url = `${API_URL}/comments?_page=${this.page}&_limit=${this.limit}`
 			this.comments = await fetch(url)
 				.then(resp => {
-					this.totalComments = Math.ceil(+resp.headers.get('x-total-count'))
+					this.totalComments = +resp.headers.get('x-total-count')
 					return resp.json()
 				})
 				.catch(error => error.data)
@@ -62,8 +76,8 @@ export default {
 
 		refetchComments(pageNumber) {
 			this.page = pageNumber
-			fetchComments().then(() => {
-				sortComments('init')
+			this.fetchComments().then(() => {
+				this.sortComments('init')
 			})
 			window.scrollTo(0, 0)
 		},
@@ -126,7 +140,7 @@ export default {
 	width: 16px;
 	color: #535bf2;
 }
-.pagination {
+.pagination-wr {
 	display: flex;
 	justify-content: center;
 	margin-top: 40px;
